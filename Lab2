@@ -1,0 +1,90 @@
+1. Instalação do Servidor OpenSSH
+
+  Comandos: 
+
+- Atualizar a lista de pacote:
+
+  sudo apt-get update
+
+-Instalar o pacote do servidor OpenSSH:
+
+   sudo apt-get install openssh-server
+
+- Verificar o status do serviço:
+
+  sudo systemctl status ssh
+
+. Resultado:
+
+Active: active (running) since Thu 2026-01-15 13:57:29 UTC; 1 day 22h ago
+
+2. Acesso Inicial (Validação)
+
+Comandos:
+
+- Conectar ao servidor via SSH:
+
+  ssh usuario@IP_DA_VM
+
+- Confirme a autenticidade do host:
+
+  Digite 'yes
+
+- Digite a senha
+
+  Senha do usuário: *****
+
+3. Configuração de Segurança
+
+Comandos: 
+
+- Faça backup do arquivo de configuração
+
+  sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bkp
+
+- Abra o arquivo de configuração
+
+  sudo nano /etc/ssh/sshd_config
+
+- Altere a porta padrão 
+
+  Port 2244
+
+- Desabilite o login de root
+
+  PermitRootLogin no
+
+- Salve e feche o arquivo
+
+  Ctrl+O, Enter, Ctrl+X
+
+.Resultado:
+
+#Port 2244
+#PermitRootLogin no
+
+
+4. Teste e Validação Final
+
+- Reinicie o serviço SSH
+
+  sudo systemctl restart ssh
+
+- Teste o acesso na nova porta
+
+  ssh usuario@IP_DA_VM -p 2244
+
+- Teste o bloqueio do usuário root
+
+   ssh root@IP_DA_VM -p 2244
+
+.Resultado:
+
+vboxuser@Ubuntu :~ $ ssh root@10.0.2.15
+root@10.0.2.15's password:
+Permission denied, please try again.
+root@10.0.2.15's password:
+  
+
+
+
