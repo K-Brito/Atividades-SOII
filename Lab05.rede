@@ -1,0 +1,77 @@
+Laboratório Prático 7: Fortificando a Rede e Controlando o Acesso
+
+Etapa 1: Configurar o Firewall com IPTABLES
+
+Script: nano firewall.sh
+
+Verificação:
+
+chmod +x firewall.sh
+sudo ./firewall.sh
+
+Resultado:
+
+Firewall configurado!
+Chain INPUT (policy DROP 0 packets, 0 bytes)
+pkts bytes target
+
+0 ACCEPT
+ctstate RELATED, ESTABLISHED
+0 ACCEPT
+tcp dpt:80
+
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+pkts bytes target
+
+Etapa 2: Instalar e Configurar o Proxy (Squid)
+
+Instale o Squid:
+
+sudo apt-get install squid
+
+Resultado:
+
+squid is already the newest version (6.13-Oubuntu0.24.04.3).
+
+Crie e edite a lista de sites bloqueados:
+
+sudo nano /etc/squid/sites_bloqueados.txt
+
+Adicione:
+.facebook.com
+.twitter.com
+.instagram.com
+
+Configure o squid.conf:
+
+sudo nano /etc/squid/squid.conf
+
+Etapa 3: Reiniciar e Testar
+
+
+1. Reinicie o Squid:
+
+sudo systemctl restart squid
+
+2. Teste do Firewall: acessar uma porta não liberada 
+
+Resultado:
+
+Trying 10.0.2.15 ...
+telnet: Unable to connect to remote host: Connection timed out
+
+3. Teste do Proxy:  navegador do cliente configurado para usar proxy IP_DA_VM:3128 e:
+
+• Acesso normal ao google.com 
+• Acesso negado ao facebook.com 
+
+Resultado ao acessar o facebook:
+
+The proxy server is refusing connections
+
+Firefox is configured to use a proxy server that is refusing connections.
+
+Error code: 403 Forbidden
+
+. Check the proxy settings to make sure that they are correct.
+. Contact your network administrator to make sure the proxy server is working.
